@@ -1,6 +1,7 @@
 package com.example.avihnd.todolistmanager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,16 +17,21 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatePickerFragment.DateDialogListener {
+    private static final String DIALOG_DATE = "MainActivity.DateDialog";
+
+    private DatePickerFragment dialog;
     private EditText mUserInput;
     private RecyclerView mTdl;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private FloatingActionButton fab;
-    ArrayList<String> tdlStrings = new ArrayList<String>();
+    ArrayList<TDLItem> tdlItems = new ArrayList<TDLItem>();
 
 
     @Override
@@ -42,26 +48,19 @@ public class MainActivity extends AppCompatActivity {
         mTdl.setLayoutManager(mLayoutManager);
 
         //set adapter
-        mAdapter = (MyAdapter)new MyAdapter(tdlStrings);
+        mAdapter = (MyAdapter)new MyAdapter(getApplicationContext(), tdlItems);
         mTdl.setAdapter(mAdapter);
 
         fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String inputStr = mUserInput.getText().toString() + "\n";
-                tdlStrings.add(inputStr);
-                int position = tdlStrings.size();
-                mAdapter.notifyItemInserted(position - 1);
-                //scroll to the bottom of the list
-                mTdl.scrollToPosition(position - 1);
-                //Toast.makeText(mContext,"Added : " + itemLabel,Toast.LENGTH_SHORT).show();
+                dialog = new DatePickerFragment();
+                dialog.show(getSupportFragmentManager(), DIALOG_DATE);
             }
         });
 
     }
-
-
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -78,13 +77,34 @@ public class MainActivity extends AppCompatActivity {
             case 1001:
                 //remove item
                 int pos = item.getOrder();
-                tdlStrings.remove(pos);
+                tdlItems.remove(pos);
                 mAdapter.notifyItemRemoved(pos);
-                mAdapter.notifyItemRangeChanged(pos, tdlStrings.size());
+                mAdapter.notifyItemRangeChanged(pos, tdlItems.size());
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
+
+    @Override
+    public void onFinishDialog(Date date) {
+        String bodyInput = mUserInput.getText().toString() + "\n";
+        String dataStringReminder = dialog.getDateStringReminder();
+        TDLItem newItem = new  TDLItem(bodyInput, date, dataStringReminder);
+//                TDLItem newItem =new  TDLItem( bodyInput, new Date(), "");
+        tdlItems.add(newItem);
+
+        int position = tdlItems.size();
+        mAdapter.notifyItemInserted(position - 1);
+        //scroll to the bottom of the list
+        mTdl.scrollToPosition(position - 1);
+        if (date != null)
+        {
+            Toast.makeText(this, "Selected Date :"+ date.toString(), Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
 
 }

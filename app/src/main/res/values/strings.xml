@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TodoListManager</string>
     <string name="delete">delete</string>
+    <string name="date_picker_title">Choose a date for the task</string>
+    <string name="no">Continue without a date</string>
+    <string name="ok">Save</string>
 </resources>
