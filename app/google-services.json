@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "906845502688",
+    "firebase_url": "https://tdlmanager-3431d.firebaseio.com",
+    "project_id": "tdlmanager-3431d",
+    "storage_bucket": "tdlmanager-3431d.appspot.com"
+  },
+
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906845502688:android:286d9d26d64e8203",
+        "android_client_info": {
+          "package_name": "com.example.avihnd.todolistmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906845502688-kr7kpbl3eik0khnf7tvbgtddaq6msdph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUQO2AINiHEB8ftxaO8hHfX8favlOL87I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906845502688-kr7kpbl3eik0khnf7tvbgtddaq6msdph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 package com.example.avihnd.todolistmanager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,7 +36,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private Context context;
 
 
-        public ViewHolder(Context contextIn, TextView v)
+        public ViewHolder(final Context contextIn, TextView v)
         {
             super(v);
             mTextView = v;
@@ -85,9 +86,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             int pos = getAdapterPosition();
-                            mDataSet.remove(pos);
-                            notifyItemRemoved(pos);
-                            notifyItemRangeChanged(pos, mDataSet.size());
+                            TDLItem itemToRemove = mDataSet.get(pos);
+                            MainActivity mainActivity = (MainActivity)context;
+                            mainActivity.removeItemFromFirebase(itemToRemove);
                             popupWindow.dismiss();
                         }});
 
